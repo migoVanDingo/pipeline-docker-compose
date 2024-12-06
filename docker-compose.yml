@@ -14,5 +14,26 @@ services:
       - ./pipeline-docker-compose/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./pipeline-docker-compose/tables/datastore.sql:/docker-entrypoint-initdb.d/datastore.sql
 
+  dao-service:
+    build:
+      context: ./dao-service
+    container_name: dao_service
+    ports:
+      - "5010:5010"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=app_user
+      - MYSQL_PASSWORD=app_password
+      - MYSQL_DATABASE=app_db
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+    network_mode: "host"
+    depends_on:
+      - mysql
+    volumes:
+      - ./dao-service/data:/app
+    command: flask run --host=0.0.0.0 --port=5010
+
 volumes:
   mysql_data:
