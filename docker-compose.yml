@@ -11,3 +11,6 @@ services:
       - "3307:3306"  # Mapping MySQL container port to host
     volumes:
       - mysql_data:/var/lib/mysql
+
+volume:
+  mysql_data:
