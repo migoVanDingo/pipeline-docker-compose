@@ -16,7 +16,8 @@ services:
 
   dao-service:
     build:
-      context: ./dao-service
+      context: ./dao-service  # Ensure Docker uses the right build context
+      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: dao_service
     ports:
       - "5010:5010"
@@ -26,14 +27,13 @@ services:
       - MYSQL_USER=app_user
       - MYSQL_PASSWORD=app_password
       - MYSQL_DATABASE=app_db
-      - FLASK_APP=app.py
+      - FLASK_APP=app.py  # Ensure Flask knows where to find app.py
       - FLASK_ENV=development
-    network_mode: "host"
     depends_on:
       - mysql
     volumes:
-      - ./dao-service/data:/app
-    command: flask run --host=0.0.0.0 --port=5010
+      - ./dao-service:/app  # Ensure the app files are copied to the correct location
+    command: flask run --host=0.0.0.0 --port=5010  # Start the Flask app
 
 volumes:
   mysql_data:
