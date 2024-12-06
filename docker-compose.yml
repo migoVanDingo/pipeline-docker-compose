@@ -11,7 +11,8 @@ services:
       - "3307:3306"  # Mapping MySQL container port to host
     volumes:
       - /media/twelvetb/services/lib/mysql:/var/lib/mysql
-      - pipeline-docker-compose/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./pipeline-docker-compose/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./pipeline-docker-compose/datastore.sql:/docker-entrypoint-initdb.d/datastore.sql
 
 volumes:
   mysql_data:
