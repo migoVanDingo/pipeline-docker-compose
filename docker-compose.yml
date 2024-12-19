@@ -10,9 +10,9 @@ services:
     ports:
       - "3308:3306"  # Mapping MySQL container port to host
     volumes:
-      - /media/twelvetb/services/lib/mysql:/var/lib/mysql
-      - ./pipeline-docker-compose/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./pipeline-docker-compose/tables/datastore.sql:/docker-entrypoint-initdb.d/datastore.sql
+      - ~/docker/mysql:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./tables/datastore.sql:/docker-entrypoint-initdb.d/datastore.sql
 
   dao-service:
     build:
