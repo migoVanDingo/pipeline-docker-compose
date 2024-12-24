@@ -13,6 +13,7 @@ services:
       - ~/docker/mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./tables/datastore.sql:/docker-entrypoint-initdb.d/datastore.sql
+      - ./tables/files.sql:/docker-entrypoint-initdb.d/files.sql
 
   dao-service:
     build:
