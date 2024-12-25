@@ -1,0 +1,18 @@
+CREATE TABLE `user` (
+  `user_id` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `hash` VARCHAR(1024) NOT NULL,
+  `firstname` VARCHAR(255) DEFAULT NULL,
+  `lastname` VARCHAR(255) DEFAULT NULL,
+  `is_active` INT NOT NULL DEFAULT 1,
+  `created_by` VARCHAR(255) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` VARCHAR(255) DEFAULT NULL,
+  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_by` VARCHAR(255) DEFAULT NULL,
+  `deleted_at` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE (`username`),
+  UNIQUE (`email`)
+);
