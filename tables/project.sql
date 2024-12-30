@@ -3,6 +3,8 @@ CREATE TABLE `project` (
   `name` VARCHAR(255) NOT NULL,
   `description` VARCHAR(1024) DEFAULT NULL,
   `path` VARCHAR(1024) DEFAULT NULL,
+  `entity_id` VARCHAR(255) NOT NULL, -- Could be a user_id or team_id
+  `entity_type` VARCHAR(64) NOT NULL, -- Specify the type of entity ('user' or 'team')
   `is_public` INT NOT NULL DEFAULT 0,
   `is_active` INT NOT NULL DEFAULT 1,
   `created_by` VARCHAR(255) NOT NULL,
@@ -14,8 +16,9 @@ CREATE TABLE `project` (
   PRIMARY KEY (`project_id`)
 );
 
+
 CREATE TABLE `project_roles` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `project_roles_id` VARCHAR(255) NOT NULL,
   `project_id` VARCHAR(255) NOT NULL,
   `user_id` VARCHAR(255) NOT NULL,
   `role` VARCHAR(255) NOT NULL, -- e.g., Admin, Editor, Viewer
@@ -23,19 +26,21 @@ CREATE TABLE `project_roles` (
   `is_active` INT NOT NULL DEFAULT 1,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`project_id`),
   FOREIGN KEY (`project_id`) REFERENCES `project`(`project_id`) ON DELETE CASCADE,
   FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `entity_projects` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `entity_id` VARCHAR(255) NOT NULL, -- Could be user_id or team_id
-  `entity_type` VARCHAR(64) NOT NULL, -- Specify the type of entity
-  `project_id` VARCHAR(255) NOT NULL,
-  `is_active` INT NOT NULL DEFAULT 1,
+CREATE TABLE `project_git_info` (
+  `project_git_info_id` VARCHAR(255) NULL,
+  `project_id` VARCHAR(255) NOT NULL, -- Foreign key to the project table
+  `git_clone_link` VARCHAR(1024) NOT NULL,
+  `latest_commit_hash` VARCHAR(255) DEFAULT NULL, -- SHA-1 hash length
+  `branch` VARCHAR(255) DEFAULT 'main', -- Default branch (optional)
+  `last_fetched_at` DATETIME DEFAULT NULL, -- Optional, for tracking sync times
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`project_id`),
   FOREIGN KEY (`project_id`) REFERENCES `project`(`project_id`) ON DELETE CASCADE
 );
+
