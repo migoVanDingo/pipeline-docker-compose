@@ -18,6 +18,7 @@ CREATE TABLE `project_roles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `project_id` VARCHAR(255) NOT NULL,
   `user_id` VARCHAR(255) NOT NULL,
+  `role` VARCHAR(255) NOT NULL, -- e.g., Admin, Editor, Viewer
   `level` INT NOT NULL, -- e.g., 1 = Admin, 2 = Editor, 3 = Viewer
   `is_active` INT NOT NULL DEFAULT 1,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -30,7 +31,7 @@ CREATE TABLE `project_roles` (
 CREATE TABLE `entity_projects` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `entity_id` VARCHAR(255) NOT NULL, -- Could be user_id or team_id
-  `entity_type` ENUM('user', 'team') NOT NULL, -- Specify the type of entity
+  `entity_type` VARCHAR(64) NOT NULL, -- Specify the type of entity
   `project_id` VARCHAR(255) NOT NULL,
   `is_active` INT NOT NULL DEFAULT 1,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -14,6 +14,9 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./tables/datastore.sql:/docker-entrypoint-initdb.d/datastore.sql
       - ./tables/files.sql:/docker-entrypoint-initdb.d/files.sql
+      - ./tables/users.sql:/docker-entrypoint-initdb.d/users.sql
+      - ./tables/project.sql:/docker-entrypoint-initdb.d/project.sql
+      - ./tables/team.sql:/docker-entrypoint-initdb.d/team.sql
 
   dao-service:
     build:
