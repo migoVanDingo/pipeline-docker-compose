@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS files (
     create_method VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(255) NOT NULL,
-    owner INT NOT NULL,
     status VARCHAR(50) DEFAULT 'active',
     metadata JSON,
     CONSTRAINT fk_files_datastore FOREIGN KEY (datastore_id) REFERENCES datastore(datastore_id) ON DELETE CASCADE,
