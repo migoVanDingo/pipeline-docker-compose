@@ -25,3 +25,17 @@ CREATE TABLE `datastore_roles` (
     FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`) ON DELETE CASCADE
 );
 
+
+CREATE TABLE datastore_config (
+    datastore_id VARCHAR(255) NOT NULL,
+    field_name VARCHAR(255) NOT NULL,
+    field_label VARCHAR(255),
+    field_type ENUM('string', 'number', 'date', 'boolean', 'enum') NOT NULL,
+    field_options JSON DEFAULT NULL, -- Use for enum options or additional metadata
+    required BOOLEAN DEFAULT TRUE, -- Indicates if the field is mandatory
+    order_index INT DEFAULT 0, -- Determines the order in forms or groupings
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (datastore_id, field_name), -- Composite primary key using datastore_id and field_name
+    FOREIGN KEY (datastore_id) REFERENCES datastore(datastore_id) -- Foreign key to datastore table
+);

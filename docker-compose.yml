@@ -17,6 +17,7 @@ services:
       - ./tables/users.sql:/docker-entrypoint-initdb.d/users.sql
       - ./tables/project.sql:/docker-entrypoint-initdb.d/project.sql
       - ./tables/team.sql:/docker-entrypoint-initdb.d/team.sql
+      - ./tables/aolme_videos.sql:/docker-entrypoint-initdb.d/aolme_videos.sql
 
   dao-service:
     build:
