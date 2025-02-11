@@ -14,3 +14,16 @@ CREATE TABLE `user` (
   UNIQUE (`username`),
   UNIQUE (`email`)
 );
+
+CREATE TABLE `user_registration` (
+  `user_registration_id` VARCHAR(255) NOT NULL,
+  `user_id` VARCHAR(255) NOT NULL,
+  `hash` VARCHAR(1024) NOT NULL,
+  `exp_datetime` DATETIME NOT NULL,
+  `exp_timestamp` INT NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_registration_id`),
+  UNIQUE (`user_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+);

@@ -4,6 +4,7 @@ CREATE TABLE jobs (
     tasks JSON NOT NULL,             -- List of tasks associated with the job
     data JSON NOT NULL,              -- Payload or additional data
     status ENUM('PENDING', 'IN_PROGRESS', 'FAILED', 'COMPLETED', 'CANCELLED') NOT NULL DEFAULT 'PENDING',
+    last_stage_completed VARCHAR(255) NULL, -- Last stage completed by the job
     retries INT DEFAULT 0,           -- Number of retries for the job
     error_message TEXT NULL,         -- Stores error details if the job fails
     priority INT DEFAULT 0,          -- Priority of the job (higher = more important)
