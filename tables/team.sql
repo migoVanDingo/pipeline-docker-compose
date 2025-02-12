@@ -1,0 +1,31 @@
+CREATE TABLE `team` (
+  `team_id` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(1024) DEFAULT NULL,
+  `is_active` INT NOT NULL DEFAULT 1,
+  `created_by` VARCHAR(255) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` VARCHAR(255) DEFAULT NULL,
+  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_by` VARCHAR(255) DEFAULT NULL,
+  `deleted_at` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`team_id`),
+  UNIQUE (`name`)
+);
+
+CREATE TABLE `team_roles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `team_id` VARCHAR(255) NOT NULL,
+  `user_id` VARCHAR(255) NOT NULL,
+  `role` VARCHAR(255) NOT NULL,
+  `level` INT NOT NULL,
+  `is_active` INT NOT NULL DEFAULT 1,
+  `created_by` VARCHAR(255) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` VARCHAR(255) DEFAULT NULL,
+  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE (`team_id`, `user_id`),
+  FOREIGN KEY (`team_id`) REFERENCES `team` (`team_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+);
