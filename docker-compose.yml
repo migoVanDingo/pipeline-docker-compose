@@ -28,7 +28,7 @@ services:
     build:
       context: ./dao-service  # Ensure Docker uses the right build context
       dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
-    container_name: dao_service
+    container_name: dao_service_remote
     ports:
       - "5010:5010"
     environment:
