@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:latest
-    container_name: mysql_container
+    container_name: mysql_container_remote
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: app_db
