@@ -171,12 +171,12 @@ services:
       context: ./aolme-dashboard-vite
     container_name: frontend
     ports:
-      - "3000:3000" # Match the port from the `serve` command
+      - "5173:5173"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
     logging:
-      driver: "json-file"
+      driver: "json-file"  
 
 volumes:
   mysql_data:
