@@ -183,6 +183,8 @@ services:
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+    logging:
+      driver: "json-file"  # This is the default, you can adjust if necessary
 
 
 volumes:
