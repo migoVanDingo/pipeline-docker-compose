@@ -174,5 +174,16 @@ services:
       - ./team-management-service:/app  # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5015
 
+  frontend:
+    build:
+      context: ./aolme-dashboard-vite
+    container_name: user_interface
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+
 volumes:
   mysql_data:
