@@ -8,7 +8,7 @@ services:
       MYSQL_USER: app_user
       MYSQL_PASSWORD: app_password
     ports:
-      - "3308:3306"  # Mapping MySQL container port to host
+      - "3308:3306" # Mapping MySQL container port to host
     volumes:
       - ~/docker/mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -23,11 +23,10 @@ services:
       - ./tables/label_studio.sql:/docker-entrypoint-initdb.d/label_studio.sql
       - ./tables/user_session.sql:/docker-entrypoint-initdb.d/user_session.sql
 
-
   dao-service:
     build:
-      context: ./dao-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./dao-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: dao_service_remote
     ports:
       - "5010:5010"
@@ -37,141 +36,134 @@ services:
       - MYSQL_USER=app_user
       - MYSQL_PASSWORD=app_password
       - MYSQL_DATABASE=app_db
-      - FLASK_APP=app.py  # Ensure Flask knows where to find app.py
+      - FLASK_APP=app.py # Ensure Flask knows where to find app.py
       - FLASK_ENV=development
     env_file:
-      - ./dao-service/.env  # Load environment variables from .env file
+      - ./dao-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./dao-service:/app  # Ensure the app files are copied to the correct location
-    command: flask run --host=0.0.0.0 --port=5010  # Start the Flask app
+      - ./dao-service:/app # Ensure the app files are copied to the correct location
+    command: flask run --host=0.0.0.0 --port=5010 # Start the Flask app
 
-  
   user-service:
     build:
-      context: ./user-management-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./user-management-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: user_service
     ports:
       - "5014:5014"
     env_file:
-      - ./user-management-service/.env  # Load environment variables from .env file
+      - ./user-management-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./user-management-service:/app  # Ensure the app files are copied to the correct location
-    command: flask run --host=0.0.0.0 --port=5014  # Start the Flask app
+      - ./user-management-service:/app # Ensure the app files are copied to the correct location
+    command: flask run --host=0.0.0.0 --port=5014 # Start the Flask app
 
   datastore-service:
     build:
-      context: ./datastore-management-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./datastore-management-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: datastore_service
     ports:
       - "5012:5012"
     env_file:
-      - ./datastore-management-service/.env  # Load environment variables from .env file
+      - ./datastore-management-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./datastore-management-service:/app  # Ensure the app files are copied to the correct location
+      - ./datastore-management-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5012
 
   project-service:
     build:
-      context: ./project-management-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./project-management-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: project_service
     ports:
       - "5013:5013"
     env_file:
-      - ./project-management-service/.env  # Load environment variables from .env file
+      - ./project-management-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./project-management-service:/app  # Ensure the app files are copied to the correct location
+      - ./project-management-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5013
-
 
   email-notification-service:
     build:
-      context: ./email-notification-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./email-notification-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: email_notification_service
     ports:
       - "5018:5018"
     env_file:
-      - ./email-notification-service/.env  # Load environment variables from .env file
+      - ./email-notification-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./email-notification-service:/app  # Ensure the app files are copied to the correct location
+      - ./email-notification-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5018
-
-
 
   job-delegation-service:
     build:
-      context: ./job-delegation-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./job-delegation-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: job_delegation_service
     ports:
       - "5017:5017"
     env_file:
-      - ./job-delegation-service/.env  # Load environment variables from .env file
+      - ./job-delegation-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./job-delegation-service:/app  # Ensure the app files are copied to the correct location
+      - ./job-delegation-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5017
-
 
   label-studio-integration-service:
     build:
-      context: ./label-studio-integration-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./label-studio-integration-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: label_studio_integration_service
     ports:
       - "5016:5016"
     env_file:
-      - ./label-studio-integration-service/.env  # Load environment variables from .env file
+      - ./label-studio-integration-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./label-studio-integration-service:/app  # Ensure the app files are copied to the correct location
+      - ./label-studio-integration-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5016
-
 
   data-processing-service:
     build:
-      context: ./data-processing-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./data-processing-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: data_processing_service
     ports:
       - "5011:5011"
     env_file:
-      - ./data-processing-service/.env  # Load environment variables from .env file
+      - ./data-processing-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./data-processing-service:/app  # Ensure the app files are copied to the correct location
+      - ./data-processing-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5011
-
 
   team-management-service:
     build:
-      context: ./team-management-service  # Ensure Docker uses the right build context
-      dockerfile: Dockerfile  # Explicitly mention Dockerfile, just in case it's named Dockerfile
+      context: ./team-management-service # Ensure Docker uses the right build context
+      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
     container_name: team_management_service
     ports:
       - "5015:5015"
     env_file:
-      - ./team-management-service/.env  # Load environment variables from .env file
+      - ./team-management-service/.env # Load environment variables from .env file
     depends_on:
       - mysql
     volumes:
-      - ./team-management-service:/app  # Ensure the app files are copied to the correct location
+      - ./team-management-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5015
 
   frontend:
@@ -179,13 +171,12 @@ services:
       context: ./aolme-dashboard-vite
     container_name: frontend
     ports:
-      - "80:80"
+      - "3000:3000" # Match the port from the `serve` command
     environment:
       - NODE_ENV=production
     restart: unless-stopped
     logging:
-      driver: "json-file"  # This is the default, you can adjust if necessary
-
+      driver: "json-file"
 
 volumes:
   mysql_data:
