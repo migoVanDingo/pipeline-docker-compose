@@ -46,20 +46,20 @@ services:
       - ./dao-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5010 # Start the Flask app
 
-  user-service:
-    build:
-      context: ./user-management-service # Ensure Docker uses the right build context
-      dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
-    container_name: user_service
-    ports:
-      - "5014:5014"
-    env_file:
-      - ./user-management-service/.env # Load environment variables from .env file
-    depends_on:
-      - mysql
-    volumes:
-      - ./user-management-service:/app # Ensure the app files are copied to the correct location
-    command: flask run --host=0.0.0.0 --port=5014 # Start the Flask app
+  # user-service:
+  #   build:
+  #     context: ./user-management-service # Ensure Docker uses the right build context
+  #     dockerfile: Dockerfile # Explicitly mention Dockerfile, just in case it's named Dockerfile
+  #   container_name: user_service
+  #   ports:
+  #     - "5014:5014"
+  #   env_file:
+  #     - ./user-management-service/.env # Load environment variables from .env file
+  #   depends_on:
+  #     - mysql
+  #   volumes:
+  #     - ./user-management-service:/app # Ensure the app files are copied to the correct location
+  #   command: flask run --host=0.0.0.0 --port=5014 # Start the Flask app
 
   datastore-service:
     build:
@@ -166,18 +166,18 @@ services:
       - ./team-management-service:/app # Ensure the app files are copied to the correct location
     command: flask run --host=0.0.0.0 --port=5015
 
-  frontend:
-    build:
-      context: ./aolme-dashboard-vite
-    container_name: frontend
-    network_mode: "host" 
-    ports:
-      - "5173:5173"
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
-    logging:
-      driver: "json-file"  
+  # frontend:
+  #   build:
+  #     context: ./aolme-dashboard-vite
+  #   container_name: frontend
+  #   network_mode: "host" 
+  #   ports:
+  #     - "5173:5173"
+  #   environment:
+  #     - NODE_ENV=production
+  #   restart: unless-stopped
+  #   logging:
+  #     driver: "json-file"  
 
 volumes:
   mysql_data:
