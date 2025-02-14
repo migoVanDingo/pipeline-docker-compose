@@ -177,9 +177,9 @@ services:
   frontend:
     build:
       context: ./aolme-dashboard-vite
-    container_name: user_interface
+    container_name: frontend
     ports:
-      - "5174:5174"
+      - "5173:5173"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
