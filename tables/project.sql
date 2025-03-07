@@ -31,16 +31,23 @@ CREATE TABLE `project_roles` (
   FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `project_git_info` (
-  `project_git_info_id` VARCHAR(255) NULL,
-  `project_id` VARCHAR(255) NOT NULL, -- Foreign key to the project table
-  `git_clone_link` VARCHAR(1024) NOT NULL,
-  `latest_commit_hash` VARCHAR(255) DEFAULT NULL, -- SHA-1 hash length
-  `branch` VARCHAR(255) DEFAULT 'main', -- Default branch (optional)
-  `last_fetched_at` DATETIME DEFAULT NULL, -- Optional, for tracking sync times
+
+
+CREATE TABLE `project_version` (
+  `project_version_id` VARCHAR(255) NOT NULL,  -- Unique ID for the version
+  `project_id` VARCHAR(255) NOT NULL,         -- Links to the main project
+  `branch` VARCHAR(255) NOT NULL,             -- The branch name
+  `commit_hash` VARCHAR(255) NOT NULL,        -- The specific commit
+  `clone_url` VARCHAR(1024) NOT NULL,         -- URL to clone the repo
+  `path` VARCHAR(1024) NOT NULL,              -- Path to the repo
+  `owner` VARCHAR(255) NOT NULL,         -- Owner of the repo (could be different from the project creator)
+  `is_fork` BOOLEAN NOT NULL DEFAULT 0,       -- Whether this is a forked version
+  `forked_from` VARCHAR(255) DEFAULT NULL,    -- If forked, the original repo it came from
+  `is_active` BOOLEAN NOT NULL DEFAULT 1,     -- Whether this version is active
+  `is_venv` BOOLEAN NOT NULL DEFAULT 0,       -- Whether this version has a virtual environment
+  `created_by` VARCHAR(255) NOT NULL,         -- Who created this version
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`project_id`),
+  PRIMARY KEY (`project_version_id`),
   FOREIGN KEY (`project_id`) REFERENCES `project`(`project_id`) ON DELETE CASCADE
 );
 
